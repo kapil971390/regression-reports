@@ -1,0 +1,19 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<title>Regression Analysis Report — vqa-web-1787397349737</title>
+<style>
+  body{font-family:system-ui,sans-serif;max-width:800px;margin:40px auto;padding:0 20px;color:#1a1a2e;}
+  h1{color:#6366f1;}
+  .badge{padding:4px 12px;border-radius:4px;font-weight:bold;color:#fff;}
+  .high{background:#ef4444;} .med{background:#f59e0b;} .low{background:#10b981;}
+  ul{padding-left:20px;} li{margin:8px 0;}
+  .section{margin:24px 0;} h2{border-bottom:2px solid #e5e7eb;padding-bottom:8px;}
+</style></head><body>
+<h1>Regression Analysis Report</h1>
+<p>Commits: <code>HEAD~1</code> → <code>HEAD</code></p>
+<p>Risk: <span class="badge med">MEDIUM</span> ✦ AI Enhanced</p>
+<div class="section"><h2>Summary</h2><p>This commit only bumps the dev dependency hbs from 4.2.0 to 4.2.1 in package.json.</p></div>
+<div class="section"><h2>What to Test</h2><ul><li>Open the changed feature and check that the updated data shows up correctly.</li><li>Run through the main user action and confirm it completes with the expected result.</li><li>Refresh the page and make sure the state is still in order.</li></ul></div>
+<div class="section"><h2>Where It Can Break</h2><ul></ul></div>
+<div class="section"><h2>Edge Cases</h2><ul></ul></div>
+<div class="section"><h2>Final Verdict</h2><p>This is a narrow dev-dependency update, so there is no code path in package.json itself that can be proven broken. The only meaningful check is whether the hbs 4.2.1 upgrade changes template compilation or test fixtures used by the project, but that requires runtime verification rather than a file-level defect claim.</p></div>
+</body></html>
