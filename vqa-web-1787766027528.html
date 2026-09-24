@@ -1,0 +1,20 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<title>Regression Analysis Report — vqa-web-1787766027528</title>
+<style>
+  body{font-family:system-ui,sans-serif;max-width:800px;margin:40px auto;padding:0 20px;color:#1a1a2e;}
+  h1{color:#6366f1;}
+  .badge{padding:4px 12px;border-radius:4px;font-weight:bold;color:#fff;}
+  .high{background:#ef4444;} .med{background:#f59e0b;} .low{background:#10b981;}
+  ul{padding-left:20px;} li{margin:8px 0;}
+  .section{margin:24px 0;} h2{border-bottom:2px solid #e5e7eb;padding-bottom:8px;}
+  .layer-badge{display:inline-block;font-size:0.7rem;font-weight:600;padding:2px 8px;border-radius:6px;background:#e5e7eb;color:#4b5563;margin-left:8px;white-space:nowrap;}
+</style></head><body>
+<h1>Regression Analysis Report</h1>
+<p>Commits: <code>cc68132</code> → <code>0df0ef4</code></p>
+<p>Risk: <span class="badge med">MEDIUM</span> ✦ AI Enhanced</p>
+<div class="section"><h2>Summary</h2><p>The regex cleanup in llm response normalization was changed from greedy bracket/paren removal to non-greedy removal so each markdown-like group is stripped independently.</p></div>
+<div class="section"><h2>What to Test</h2><ul><li>Step 1: Mock _generate_response to return a line like &quot;[Scene] A beautiful day at the [location].&quot; Step 2: Call generate_script(). Step 3: Inspect the returned script text.</li><li>Step 1: Mock a response that includes explanatory prose with parentheses, such as &quot;Save (at least) 10% monthly.&quot; Step 2: Run generate_script(). Step 3: Check whether the prose still reads correctly.</li></ul></div>
+<div class="section"><h2>Where It Can Break</h2><ul><li>[VERIFY] app/services/llm.py:56-57 — verify whether stripping every non-greedy (...) and [...] group is still acceptable for prompts that legitimately contain parenthetical or bracketed content the user wanted preserved.</li><li>[VERIFY] test/services/test_llm.py:1 — verify the new test file is syntactically valid and correctly indented, since the added function body is shown without surrounding class context in the diff.</li><li>[VERIFY] If the regex is still greedy, it can erase large spans of valid script content and produce broken output.</li><li>[VERIFY] If the cleanup is too broad, it may remove user-visible content that is not markdown formatting.</li></ul></div>
+<div class="section"><h2>Edge Cases</h2><ul><li>If the regex is still greedy, it can erase large spans of valid script content and produce broken output.</li><li>If the cleanup is too broad, it may remove user-visible content that is not markdown formatting.</li></ul></div>
+<div class="section"><h2>Final Verdict</h2><p>The regex fix in app/services/llm.py correctly targets the greedy-removal bug, and the new test exercises the exact multi-group case that used to collapse script text. The main thing to verify is whether generate_script() is supposed to remove all bracketed/parenthesized prose, not just markdown-like tags, because this change now strips each group independently. If that behavior is acceptable, the patch looks safe and the regression test is well aimed.</p></div>
+</body></html>
